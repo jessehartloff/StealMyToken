@@ -13,11 +13,12 @@ router.post('/register', function (req, res, next) {
 	if (req.body.password1 === req.body.password2) {
 		let password = req.body.password1;
 		const username = req.body.username;
-		let token = crypto.randomBytes(2).toString('base64');
+		const authToken = crypto.randomBytes(80).toString('base64');
+		let token = crypto.randomBytes(1000).toString('base64');
 		const salt = crypto.randomBytes(80).toString('base64');
 		const hash = hashFunction(password, salt);
 		const collection = req.db.get("users");
-		collection.insert({username: username, password: hash, salt: salt, token: token, auth_token: username}, function (err) {
+		collection.insert({username: username, password: hash, salt: salt, token: token, auth_token: authToken}, function (err) {
 			res.send("Registered username: " + username)
 		})
 	} else {
