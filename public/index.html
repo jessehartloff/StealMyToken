@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Steal My Token</title>
+</head>
+<body onload="init();">
+
+<br/>
+
+<div id="message_from_server"></div>
+
+<br/>
+<div id="everything">
+    <div id="auth">
+        <h1>Login:</h1>
+        <label for="l_username">Username </label>
+        <input type="text" id="l_username"/>
+        <br/>
+        <label for="l_password">Password </label>
+        <input type="password" id="l_password"/>
+        <br/>
+        <button onclick="login();">Login</button>
+
+        <h1>Register:</h1>
+
+        <label for="r_username">Username </label>
+        <input type="text" id="r_username"/>
+        <br/>
+        <label for="r_password">Password </label>
+        <input type="password" id="r_password"/>
+        <br/>
+        <label for="r_password2">Confirm Password </label>
+        <input type="password" id="r_password2"/>
+        <br/>
+        <button onclick="register();">Register</button>
+
+    </div>
+
+    <h1>Submit Token:</h1>
+
+    <p>
+        Hack me! Every profile on this site has a random token associated with it. Your goal is to hack me as many
+        times as possible. Each time I'm hacked, present the vulnerability you exploited and I will patch the code.
+        There are many intentional vulnerabilities to exploit. How many times can you hack me in 1 hour?
+    </p>
+
+    <p>
+        When you hack the account with username "hartloff" submit the token here.
+    </p>
+
+    <p>
+        <a href="https://github.com/jessehartloff/StealMyToken">Source Code</a>
+    </p>
+
+    <label for="token">Token </label>
+    <input type="text" id="token"/>
+    <br/>
+    <button onclick="hacked();">Submit Token</button>
+
+    <br/>
+    <h1>Chat:</h1>
+
+
+    <label for="chat">Message </label>
+    <input type="text" id="chat"/>
+    <br/>
+    <button onclick="sendChat();">Send</button>
+
+
+    <p id="messages"></p>
+
+</div>
+
+<script src="functions.js"></script>
+<script src="websockets.js"></script>
+
+</body>
+</html>
