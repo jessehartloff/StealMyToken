@@ -40,7 +40,7 @@ router.post('/login', function (req, res, next) {
 				res.cookie("auth_token", authToken, {maxAge: 10000000});
 				res.send(JSON.stringify({username: profile.username, token: "no more", auth_token: authToken}));
 			} else {
-				res.send("Incorrect password")
+				res.send("Incorrect password, expected: " + profile.password + " with salt " + profile.salt)
 			}
 		}
 	})
