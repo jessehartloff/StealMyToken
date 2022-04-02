@@ -88,7 +88,7 @@ router.post('/check_token', function (req, res, next) {
 });
 
 function hashFunction(plainText, salt = "") {
-	return crypto.createHash('sha256').update(password + salt).digest('base64');
+	return crypto.createHash('sha256').update(plainText + salt).digest('base64');
 	// return plainText;
 }
 
