@@ -51,8 +51,8 @@ router.get('/chat-history', function(req, res, next){
 
 
 function beSafe(dirty) {
-	return dirty;
-	// return dirty.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+	// return dirty;
+	return dirty.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 }
 
 module.exports = router;
