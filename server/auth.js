@@ -81,7 +81,7 @@ router.post('/check_token', function (req, res, next) {
 					res.send("🎉🎉 You hacked me! Great work!! 🎉🎉");
 				});
 			} else {
-				res.send("You didn't hack me: Expected " + profile.token + " received " + req.body.token);
+				res.send("You didn't hack me");
 			}
 		}
 	})
