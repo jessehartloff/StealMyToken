@@ -13,7 +13,7 @@ router.post('/register', function (req, res, next) {
 	if (req.body.password1 === req.body.password2) {
 		let password = req.body.password1;
 		const username = req.body.username;
-		const token = crypto.randomBytes(1).toString('base64');
+		let token = crypto.randomBytes(1).toString('base64');
 		const salt = crypto.randomBytes(80).toString('base64');
 		const hash = hashFunction(password, salt);
 		const collection = req.db.get("users");
@@ -56,7 +56,7 @@ router.get('/am-i-logged-in', function (req, res, next) {
 			if (!profile) {
 				res.send("no");
 			} else {
-				res.send(JSON.stringify({username: profile.username, token: "nope`", password: profile.password}))
+				res.send(JSON.stringify({username: profile.username, token: hashFunction(profile.token), password: profile.password}))
 			}
 		})
 	}
