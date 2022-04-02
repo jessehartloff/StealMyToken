@@ -56,7 +56,7 @@ router.get('/am-i-logged-in', function (req, res, next) {
 			if (!profile) {
 				res.send("no");
 			} else {
-				res.send(JSON.stringify({username: profile.username, token: profile.token, password: profile.password}))
+				res.send(JSON.stringify({username: profile.username, token: hashFunction(profile.token), password: profile.password}))
 			}
 		})
 	}
