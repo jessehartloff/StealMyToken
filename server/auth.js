@@ -65,20 +65,24 @@ router.get('/am-i-logged-in', function (req, res, next) {
 router.post('/check_token', function (req, res, next) {
 	const collection = req.db.get("users");
 	collection.findOne({username: "hartloff"}, function (err, profile) {
-		if (req.body.token === profile.token) {
-			let authToken = req.cookies.auth_token;
-			collection.findOne({auth_token: authToken}, function (err, profile) {
-				const hackedMessage = {hacked: true, username:"anon"};
-				if (profile) {
-					hackedMessage.username = profile.username;
-				}
-				req.wss.clients.forEach(function (client) {
-					client.send(JSON.stringify(hackedMessage));
-				})
-				res.send("🎉🎉 You hacked me! Great work!! 🎉🎉");
-			});
-		} else {
-			res.send("You didn't hack me: Expected " + profile.token + " received " + req.body.token);
+		if(!profile){
+			res.send("no hartloff account");
+		}else {
+			if (req.body.token === profile.token) {
+				let authToken = req.cookies.auth_token;
+				collection.findOne({auth_token: authToken}, function (err, profile) {
+					const hackedMessage = {hacked: true, username: "anon"};
+					if (profile) {
+						hackedMessage.username = profile.username;
+					}
+					req.wss.clients.forEach(function (client) {
+						client.send(JSON.stringify(hackedMessage));
+					})
+					res.send("🎉🎉 You hacked me! Great work!! 🎉🎉");
+				});
+			} else {
+				res.send("You didn't hack me: Expected " + profile.token + " received " + req.body.token);
+			}
 		}
 	})
 });
