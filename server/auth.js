@@ -37,7 +37,7 @@ router.post('/login', function (req, res, next) {
 				// authed
 				const authToken = profile.auth_token;
 				res.cookie("auth_token", authToken, {maxAge: 10000000});
-				res.send(JSON.stringify({username: profile.username, token: profile.token, auth_token: authToken}));
+				res.send(JSON.stringify({username: profile.username, token: "no more", auth_token: authToken}));
 			} else {
 				res.send("Incorrect password")
 			}
@@ -56,7 +56,7 @@ router.get('/am-i-logged-in', function (req, res, next) {
 			if (!profile) {
 				res.send("no");
 			} else {
-				res.send(JSON.stringify({username: profile.username, token: profile.token, password: profile.password}))
+				res.send(JSON.stringify({username: profile.username, token: "nope`", password: profile.password}))
 			}
 		})
 	}

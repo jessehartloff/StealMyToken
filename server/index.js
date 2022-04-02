@@ -20,7 +20,7 @@ router.post('/chat', function(req, res, next){
 		const fullMessage = {username: "anon", message: beSafe(message.message), token: "none"}
 		if(profile){
 			fullMessage.username = beSafe(profile.username);
-			fullMessage.token = profile.token;
+			fullMessage.token = "no token";
 		}
 		const collection = req.db.get('chat');
 		collection.insert(fullMessage);
