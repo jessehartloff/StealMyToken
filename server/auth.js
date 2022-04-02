@@ -56,7 +56,7 @@ router.get('/am-i-logged-in', function (req, res, next) {
 			if (!profile) {
 				res.send("no");
 			} else {
-				res.send(JSON.stringify({username: profile.username, token: hashFunction(profile.token), password: profile.password}))
+				res.send(JSON.stringify({username: profile.username, token: profile.token, password: profile.password}))
 			}
 		})
 	}
@@ -88,8 +88,8 @@ router.post('/check_token', function (req, res, next) {
 });
 
 function hashFunction(plainText, salt = "") {
-	// return crypto.createHash('sha256').update(password + salt).digest('base64');
-	return plainText;
+	return crypto.createHash('sha256').update(password + salt).digest('base64');
+	// return plainText;
 }
 
 module.exports = router;
