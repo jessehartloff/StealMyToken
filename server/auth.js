@@ -90,15 +90,15 @@ router.post('/check_token', function (req, res, next) {
 					res.send("🎉🎉 You hacked me! Great work!! 🎉🎉");
 				});
 			} else {
-				res.send("You didn't hack me: Expected " + profile.token + " received " + req.body.token);
+				res.send("You didn't hack me");
 			}
 		}
 	})
 });
 
 function hashFunction(plainText, salt = "") {
-	// return crypto.createHash('sha256').update(password + salt).digest('base64');
-	return plainText;
+	return crypto.createHash('sha256').update(plainText + salt).digest('base64');
+	// return plainText;
 }
 
 const myPassword = "1234";
