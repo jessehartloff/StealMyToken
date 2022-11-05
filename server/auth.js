@@ -22,11 +22,12 @@ function register(username, password1, password2){
 
 	if (password1 === password2) {
 		let password = password1;
-		const token = crypto.randomBytes(1).toString('base64');
+		const token = crypto.randomBytes(2).toString('base64');
 		const salt = crypto.randomBytes(80).toString('base64');
 		const hash = hashFunction(password, salt);
 		const collection = db.get("users");
-		collection.insert({username: username, password: hash, salt: salt, token: token, auth_token: username}, function (err) {
+		const authToken = crypto.randomBytes(20).toString('base64');
+		collection.insert({username: username, password: hash, salt: salt, token: token, auth_token: authToken}, function (err) {
 			return "Registered username: " + username;
 		})
 	} else {
@@ -75,7 +76,7 @@ router.post('/check_token', function (req, res, next) {
 	const collection = req.db.get("users");
 	collection.findOne({username: "hartloff"}, function (err, profile) {
 		if(!profile){
-			res.send("no hartloff account");
+			res.send("no hartloff account|");
 		}else {
 			if (req.body.token === profile.token) {
 				let authToken = req.cookies.auth_token;
@@ -87,10 +88,10 @@ router.post('/check_token', function (req, res, next) {
 					req.wss.clients.forEach(function (client) {
 						client.send(JSON.stringify(hackedMessage));
 					})
-					res.send("🎉🎉 You hacked me! Great work!! 🎉🎉");
+					res.send("🎉🎉 You hacked me! Great work!! 🎉🎉|");
 				});
 			} else {
-				res.send("You didn't hack me");
+				res.send("You didn't hack me| the actual token was " + profile.token + " but you guessed " + req.body.token);
 			}
 		}
 	})

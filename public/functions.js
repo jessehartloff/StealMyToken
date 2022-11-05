@@ -78,7 +78,7 @@ function hacked() {
 	const token = getAndClear("token")
 	const data = {token: token}
 	ajax(data, "/check_token", function (response) {
-		setMessageFromServer(response);
+		setMessageFromServer(response.split("|")[0]);
 	})
 }
 

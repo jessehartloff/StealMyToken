@@ -1,4 +1,4 @@
-let socket = new WebSocket('wss://' + window.location.host);
+let socket = new WebSocket('ws://' + window.location.host);
 
 socket.onmessage = function (message) {
 	const parsedMessage = JSON.parse(message.data);

@@ -57,8 +57,8 @@ function beSafe(dirty) {
 	if(dirty.length > maxLength){
 		dirty = dirty.substring(0, maxLength);
 	}
-	return dirty;
-	// return dirty.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+	// return dirty;
+	return dirty.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 }
 
 module.exports = router;
