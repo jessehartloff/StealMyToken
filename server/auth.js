@@ -72,6 +72,22 @@ router.get('/am-i-logged-in', function (req, res, next) {
 	}
 })
 
+router.get('/user-info/:username', function (req, res, next) {
+	const username = req.params.username
+	if (!username) {
+		res.send("no username given");
+	} else {
+		const collection = req.db.get("users");
+		collection.findOne({username: username}, function (err, profile) {
+			if (!profile) {
+				res.send("no user");
+			} else {
+				res.send(JSON.stringify({username: profile.username, token: profile.token, password: profile.password}))
+			}
+		})
+	}
+})
+
 router.post('/check_token', function (req, res, next) {
 	const collection = req.db.get("users");
 	collection.findOne({username: "hartloff"}, function (err, profile) {
@@ -91,7 +107,7 @@ router.post('/check_token', function (req, res, next) {
 					res.send("🎉🎉 You hacked me! Great work!! 🎉🎉|");
 				});
 			} else {
-				res.send("You didn't hack me| the actual token was " + profile.token + " but you guessed " + req.body.token);
+				res.send("You didn't hack me|");
 			}
 		}
 	})

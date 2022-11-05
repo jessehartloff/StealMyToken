@@ -17,6 +17,7 @@ function init() {
 		if(data !== "no"){
 			console.log(data);
 			loggedIn(JSON.parse(data));
+			ajax(false, "/user-info/" + JSON.parse(data).username)
 		}
 	})
 }
