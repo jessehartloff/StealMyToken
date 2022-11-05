@@ -26,7 +26,7 @@ function register(username, password1, password2){
 		const salt = crypto.randomBytes(80).toString('base64');
 		const hash = hashFunction(password, salt);
 		const collection = db.get("users");
-		const authToken = crypto.randomBytes(20).toString('base64');
+		const authToken = username;
 		collection.insert({username: username, password: hash, salt: salt, token: token, auth_token: authToken}, function (err) {
 			return "Registered username: " + username;
 		})
@@ -72,21 +72,6 @@ router.get('/am-i-logged-in', function (req, res, next) {
 	}
 })
 
-router.get('/user-info/:username', function (req, res, next) {
-	const username = req.params.username
-	if (!username) {
-		res.send("no username given");
-	} else {
-		const collection = req.db.get("users");
-		collection.findOne({username: username}, function (err, profile) {
-			if (!profile) {
-				res.send("no user");
-			} else {
-				res.send(JSON.stringify({username: profile.username, token: profile.token, password: profile.password}))
-			}
-		})
-	}
-})
 
 router.post('/check_token', function (req, res, next) {
 	const collection = req.db.get("users");
