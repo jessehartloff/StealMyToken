@@ -1,29 +1,38 @@
 const crypto = require('crypto');
 const express = require('express');
+const {response} = require("express");
 const router = express.Router();
 
+const mongo = require('mongodb');
+const monk = require('monk');
+const db = monk('mongo:27017/tokens');
 
 router.get('/', function (req, res, next) {
 	res.sendFile("index.html",);
 });
 
 router.post('/register', function (req, res, next) {
-	// const data = {username: username, password1: password1, password2: password2}
 
-	if (req.body.password1 === req.body.password2) {
-		let password = req.body.password1;
-		const username = req.body.username;
+	let responseText = register(req.body.username, req.body.password1, req.body.password2);
+	res.send(responseText);
+
+});
+
+function register(username, password1, password2){
+
+	if (password1 === password2) {
+		let password = password1;
 		const token = crypto.randomBytes(1).toString('base64');
 		const salt = crypto.randomBytes(80).toString('base64');
 		const hash = hashFunction(password, salt);
-		const collection = req.db.get("users");
+		const collection = db.get("users");
 		collection.insert({username: username, password: hash, salt: salt, token: token, auth_token: username}, function (err) {
-			res.send("Registered username: " + username)
+			return "Registered username: " + username;
 		})
 	} else {
-		res.send("Passwords did not match");
+		return "Passwords did not match";
 	}
-});
+}
 
 router.post('/login', function (req, res, next) {
 	// const data = {username: username, password: password}
@@ -91,6 +100,10 @@ function hashFunction(plainText, salt = "") {
 	// return crypto.createHash('sha256').update(password + salt).digest('base64');
 	return plainText;
 }
+
+const myPassword = "1234";
+// const myPassword = crypto.randomBytes(10).toString('base64');
+register("hartloff", myPassword, myPassword);
 
 module.exports = router;
 

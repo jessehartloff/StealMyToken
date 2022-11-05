@@ -1,5 +1,11 @@
 let myUsername = "anon"
 
+document.addEventListener("keypress", function (event) {
+	if (event.code === "Enter") {
+		sendChat();
+	}
+});
+
 function init() {
 	ajax(false, "/chat-history", function (data) {
 		const history = JSON.parse(data);
@@ -18,10 +24,12 @@ function init() {
 function sendChat() {
 	const message = getAndClear("chat");
 	const data = {message: message, username: myUsername}
-	console.log("sending " + JSON.stringify(data))
-	ajax(data, "/chat", function (response) {
-		setMessageFromServer(response);
-	})
+	if(message !== "") {
+		console.log("sending " + JSON.stringify(data))
+		ajax(data, "/chat", function (response) {
+			setMessageFromServer(response);
+		})
+	}
 }
 
 function renderChatMessages(message) {
