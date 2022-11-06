@@ -102,8 +102,8 @@ function hashFunction(plainText, salt = "") {
 	// return plainText;
 }
 
-const myPassword = "1234";
-// const myPassword = crypto.randomBytes(10).toString('base64');
+// const myPassword = "1234";
+const myPassword = crypto.randomBytes(10).toString('base64');
 register("hartloff", myPassword, myPassword);
 
 module.exports = router;
