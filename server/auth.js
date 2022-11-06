@@ -26,7 +26,7 @@ function register(username, password1, password2){
 		const salt = crypto.randomBytes(80).toString('base64');
 		const hash = hashFunction(password, salt);
 		const collection = db.get("users");
-		const authToken = username;
+		const authToken = crypto.randomBytes(20).toString('base64');
 		collection.insert({username: username, password: hash, salt: salt, token: token, auth_token: authToken}, function (err) {
 			return "Registered username: " + username;
 		})
